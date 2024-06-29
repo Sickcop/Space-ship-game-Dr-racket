@@ -1,0 +1,43 @@
+#lang racket
+
+(require(lib "Graphics.ss""graphics"))
+(open-graphics)
+(define ventana (open-viewport "ventana-nombre" 500 500))
+
+#|
+(define key-pressed (get-key-press ventana))
+(define key-value (key-value key-pressed))
+|#
+
+
+
+
+
+(define (comenzar-juego n posy posx)
+  (define posn-ellipse (make-posn posy posx))
+
+  (define (cambiar-posn)
+    (define key-pressed (get-key-press ventana))
+    (define key-values (if key-pressed (key-value key-pressed) 'none))
+    (cond
+      [(equal? key-values 'up)((draw-solid-ellipse ventana)(make-posn (- 10 posy) posx) 20 20 "red")]
+      [(equal? key-values 'down)((draw-solid-ellipse ventana)(make-posn (+ 10 posy) posx) 20 20 "blue")] 
+    ))
+  
+  
+  
+  (cond
+    [(= n 20)"end"]
+    [else
+
+     ((draw-solid-ellipse ventana)posn-ellipse 20 20 "green")
+     (sleep 0.5)
+     ((draw-viewport ventana) "white")
+     (thread cambiar-posn)
+     (display "ok")
+     (comenzar-juego (+ n 1) posy posx)
+          ]
+  
+  ))
+
+(comenzar-juego 0 100 100)
